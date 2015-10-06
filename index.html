@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>PasteUploader</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+    <h1>PasteUploader</h1>
+    <form>
+        <input type="text" id="listener" placeholder="Paste image here">
+    </form>
+    <ul id="displayType"></ul>
+    <script>
+        $(function(){
+            $("#listener").on('paste', function (event) {
+                var items = (event.originalEvent.clipboardData || event.clipboardData).items;
+                for (var i = 0; i < items.length; i++) {
+                    var item = items[i]; 
+                    if (item.type.indexOf('image') != -1) {
+                        var url = URL.createObjectURL(item.getAsFile());
+                        $("#displayType").append($("<li>").append($("<img src='"+url+"'>")));
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
